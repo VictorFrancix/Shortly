@@ -9,17 +9,23 @@ dotenv.config();
 
 export async function signIn (req,res){
    try{
-        let {email,password}=res.locals;
+        const {email,password}=req.body;
 
         const verifyUser= await checkLogin(email);
         console.log(verifyUser.rows)
+
+        if(verifyUser.rows.length === 0){
+            res.status(401).send("Usuário Inexistente")
+        }
 
         if(!bcrypt.compareSync(password, verifyUser.rows[0].password)){
             res.status(401).send("email ou senha incorretos...");
             return;
         }
 
-        const data = {id: user.rows[0].id, name: user.rows[0].name}
+        
+
+        const data = {id: verifyUser.rows[0].id, name: verifyUser.rows[0].name}
 
         const config = { expiresIn: 60*60*24*3} 
         const token= jwt.sign(data ,process.env.ENCRYPTPASSWORD, config);

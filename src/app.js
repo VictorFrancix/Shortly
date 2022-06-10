@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use(authRouter);
 
+
 app.listen(process.env.PORT, () => {
     console.log(chalk.blue("Server running on port 4000"));
 });

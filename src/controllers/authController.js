@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import { checkLogin, insertToken } from "./../repositories/authRepository.js";
+import { searchUser, insertToken } from "./../repositories/authRepository.js";
 
 dotenv.config();
 
@@ -11,7 +11,7 @@ export async function signIn (req,res){
    try{
         const {email,password}=req.body;
 
-        const verifyUser= await checkLogin(email);
+        const verifyUser= await searchUser(email);
         console.log(verifyUser.rows)
 
         if(verifyUser.rows.length === 0){

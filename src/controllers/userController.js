@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import { newUser } from "../repositories/userRepository.js";
-import { getRankingQuery } from "../repositories/rankingRepository.js";
 import bcrypt from "bcrypt";
 
 export async function createUser(req, res) {
@@ -18,4 +17,8 @@ export async function createUser(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+
+
+
 

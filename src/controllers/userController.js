@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { newUser } from "../repositories/userRepository.js";
+import { getRankingQuery } from "../repositories/rankingRepository.js";
 import bcrypt from "bcrypt";
 
 export async function createUser(req, res) {
@@ -9,11 +10,12 @@ export async function createUser(req, res) {
        await newUser(name, email, hashPassword);
         res.status(201).send({message: "User created successfully"});
     } catch(err){
-        console.log(chalk.red(`ERROR CREATING USER: ${err}`));
+        console.log(chalk.red(`${err}`));
 
         if(err.message.includes("duplicate key value violates unique constraint"))
-            return res.status(409).send({error: "User already exists"});
+            return res.status(409).send("User already exists");
 
-        res.status(500).send({error: err.message});
+        res.status(500).send(err.message);
     }
 }
+

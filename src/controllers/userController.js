@@ -1,3 +1,4 @@
+import connection from "../data/db.js";
 import chalk from "chalk";
 import { newUser } from "../repositories/userRepository.js";
 import bcrypt from "bcrypt";
@@ -17,8 +18,4 @@ export async function createUser(req, res) {
         res.status(500).send(err.message);
     }
 }
-
-
-
-
 

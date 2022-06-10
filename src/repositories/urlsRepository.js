@@ -7,3 +7,8 @@ export async function insertUrls(userId, url, shortUrl){
     VALUES ($1,$2,$3)
     `,[userId,url,shortUrl]);
 }
+
+export function getUrl(param, value) {
+    return connection.query(`SELECT * FROM urls 
+    WHERE "${param}" = $1`, [value]);
+  }

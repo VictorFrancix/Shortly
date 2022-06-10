@@ -1,6 +1,6 @@
 import connection from "../data/db.js";
 import { nanoid } from "nanoid";
-import { insertUrls } from "../repositories/urlsRepository.js";
+import { insertUrls, getUrl } from "../repositories/urlsRepository.js";
 
 
 export async function createShortUrl (req, res) {
@@ -23,5 +23,23 @@ export async function createShortUrl (req, res) {
     catch(e){
         console.log(e);
         res.status(500).send(e.message);
+    }
+}
+
+export async function findShortUrl (req,res){
+    const {id}=req.params;
+    if(!id) return res.sendStatus(409);
+    
+    try{
+    
+        const findShort= await getUrl("id", id)
+
+        if(findShort.rowCount === 0) return res.sendStatus(404);
+        res.status(200).send(findShort.rows[0]);
+
+    }
+    catch(e){
+        console.log(e.message)
+        res.status(400).send(e.message);
     }
 }
